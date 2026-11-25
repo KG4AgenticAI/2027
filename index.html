@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KG4AgenticAI 2027 · Knowledge Graphs for Agentic AI Systems Engineering · CAiSE 2027 Workshop</title>
+<meta name="description" content="1st Workshop on Knowledge Graphs for Agentic AI Systems Engineering (KG4AgenticAI), co-located with CAiSE 2027, Seville, Spain, 8 June 2027.">
+<meta property="og:title" content="KG4AgenticAI 2027 @ CAiSE, Seville">
+<meta property="og:description" content="1st Workshop on Knowledge Graphs for Agentic AI Systems Engineering, 8 June 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b1426; --ink-2:#13213b; --paper:#f7f5f0; --card:#ffffff;
+    --text:#1c2333; --muted:#5b6478; --line:#e3e0d8;
+    --teal:#19b3a6; --amber:#f2a93b; --coral:#e8615a; --violet:#7b6cf6;
+    --radius:14px; --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"IBM Plex Sans",system-ui,sans-serif;color:var(--text);background:var(--paper);line-height:1.65;font-size:17px}
+  a{color:#0f7f76;text-decoration:none;border-bottom:1px solid rgba(15,127,118,.3)}
+  a:hover{border-bottom-color:currentColor}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.15;color:var(--ink)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;background:rgba(11,20,38,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08)}
+  nav .wrap{display:flex;align-items:center;gap:28px;height:58px;overflow-x:auto;scrollbar-width:none}
+  nav .brand{font-family:"Space Grotesk";font-weight:700;color:#fff;border:0;white-space:nowrap}
+  nav .brand span{color:var(--teal)}
+  nav ul{display:flex;gap:20px;list-style:none;margin-left:auto}
+  nav ul a{color:#c6cede;border:0;font-size:14.5px;white-space:nowrap}
+  nav ul a:hover{color:#fff}
+
+  /* hero */
+  header.hero{background:radial-gradient(1200px 500px at 80% 20%,#1d3257 0%,var(--ink) 60%);color:#e9edf5;position:relative;overflow:hidden}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:24px;align-items:center;padding-top:64px;padding-bottom:72px}
+  .eyebrow{font-family:"IBM Plex Mono";font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+  .hero h1{color:#fff;font-size:clamp(34px,4.6vw,54px);margin:14px 0 6px}
+  .hero h1 .acr{display:block;font-size:.5em;color:var(--amber);margin-top:12px;letter-spacing:.02em}
+  .hero p.lead{color:#b9c3d6;max-width:520px;margin-top:16px}
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+  .chip{font-family:"IBM Plex Mono";font-size:13.5px;padding:7px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.18);color:#e9edf5;background:rgba(255,255,255,.04)}
+  .chip b{color:var(--amber);font-weight:500}
+  .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:11px 20px;border-radius:10px;font-weight:600;font-size:15px;border:0}
+  .btn.primary{background:var(--teal);color:var(--ink)}
+  .btn.ghost{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+  .btn:hover{filter:brightness(1.08)}
+  .hero svg{width:100%;height:auto;max-height:440px}
+
+  /* graph animation */
+  .edge{stroke:#3a5078;stroke-width:1.4}
+  .edge.hot{stroke:var(--teal);stroke-width:2.4;stroke-dasharray:6 8;animation:flow 2.4s linear infinite}
+  .node{fill:#1b2b4a;stroke:#5c76a6;stroke-width:1.5}
+  .node.ent{fill:#13314a;stroke:var(--teal)}
+  .node.hot{fill:var(--teal);stroke:#bff3ee;animation:pulse 2.4s ease-in-out infinite}
+  .lbl{font-family:"IBM Plex Mono";font-size:10.5px;fill:#8ea2c6}
+  .agent-ring{fill:none;stroke:rgba(242,169,59,.35);stroke-width:1.5;stroke-dasharray:3 6}
+  .agent-core{fill:var(--amber)}
+  .step{font-family:"IBM Plex Mono";font-size:11px;fill:var(--amber)}
+  .orbit{animation:spin 14s linear infinite;transform-origin:430px 300px}
+  @keyframes flow{to{stroke-dashoffset:-28}}
+  @keyframes pulse{50%{r:11}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important}}
+
+  /* sections */
+  section{padding:76px 0;border-bottom:1px solid var(--line)}
+  section:nth-of-type(even){background:#fbfaf7}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:28px}
+  .sec-head .num{font-family:"IBM Plex Mono";color:var(--teal);font-size:14px}
+  .sec-head h2{font-size:clamp(26px,3vw,34px)}
+  .prose p{max-width:780px;margin-bottom:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .card h3{font-size:19px;margin-bottom:8px}
+  .card .tag{font-family:"IBM Plex Mono";font-size:12px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;display:block}
+  .t1{color:var(--teal)} .t2{color:#c7831a} .t3{color:var(--coral)}
+  .card p{color:var(--muted);font-size:15.5px}
+
+  .compare{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px}
+  .compare .card{border-left:4px solid var(--violet)}
+
+  /* topics */
+  ol.topics{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:12px;counter-reset:t}
+  ol.topics li{counter-increment:t;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px 16px 62px;position:relative;font-size:16px}
+  ol.topics li::before{content:counter(t,decimal-leading-zero);position:absolute;left:18px;top:15px;font-family:"IBM Plex Mono";font-size:14px;color:var(--teal);font-weight:500}
+
+  /* submission */
+  .papers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0}
+  .papers .card .pages{font-family:"Space Grotesk";font-size:32px;font-weight:700;color:var(--ink)}
+  .papers .card .pages small{font-size:15px;color:var(--muted);font-weight:500}
+  .note{background:#eef8f7;border:1px solid #cdeae7;border-radius:12px;padding:16px 20px;font-size:15.5px;max-width:780px}
+
+  /* dates */
+  table.dates{width:100%;max-width:640px;border-collapse:collapse;font-size:16px}
+  table.dates td{padding:14px 4px;border-bottom:1px solid var(--line)}
+  table.dates td:last-child{text-align:right;font-family:"IBM Plex Mono";font-size:15px}
+  table.dates tr.main td{font-weight:600;color:var(--ink)}
+  .tba{color:var(--coral)}
+
+  /* program */
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .slot{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;border-top:4px solid var(--teal)}
+  .slot:nth-child(2){border-top-color:var(--amber)} .slot:nth-child(3){border-top-color:var(--violet)} .slot:nth-child(4){border-top-color:var(--coral)}
+  .slot b{font-family:"Space Grotesk";display:block;margin-bottom:4px}
+  .slot span{color:var(--muted);font-size:15px}
+
+  /* people */
+  .people{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .person{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column}
+  .avatar{width:96px;height:96px;border-radius:50%;object-fit:cover;background:linear-gradient(135deg,var(--ink-2),#2a4573);display:grid;place-items:center;color:#fff;font-family:"Space Grotesk";font-size:30px;font-weight:600;margin-bottom:16px;border:3px solid #fff;box-shadow:0 0 0 2px var(--teal)}
+  .person h3{font-size:20px}
+  .person .role{font-family:"IBM Plex Mono";font-size:12.5px;color:var(--teal);text-transform:uppercase;letter-spacing:.06em;margin:4px 0 2px}
+  .person .aff{font-size:14.5px;color:var(--muted);margin-bottom:12px}
+  .person p{font-size:15px;color:#394155}
+  .person .links{margin-top:auto;padding-top:14px;font-size:14.5px;display:flex;gap:14px;flex-wrap:wrap}
+
+  ul.pc{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:0 32px}
+  ul.pc li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+  ul.pc li span{color:var(--muted);font-size:14.5px;display:block}
+
+  footer{background:var(--ink);color:#9aa7bf;padding:40px 0;font-size:14.5px}
+  footer a{color:#d3dbea;border-bottom-color:rgba(255,255,255,.25)}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+  @media (max-width:880px){
+    .hero .wrap{grid-template-columns:1fr;padding-top:40px}
+    .hero svg{max-height:300px}
+    .grid3,.compare,.people,.timeline{grid-template-columns:1fr 1fr}
+    ol.topics,ul.pc,.papers{grid-template-columns:1fr}
+  }
+  @media (max-width:600px){
+    .grid3,.compare,.people,.timeline{grid-template-columns:1fr}
+    nav ul{gap:14px}
+    body{font-size:16px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">KG4<span>Agentic</span>AI</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#submission">Submission</a></li>
+      <li><a href="#dates">Dates</a></li>
+      <li><a href="#program">Program</a></li>
+      <li><a href="#organizers">Organizers</a></li>
+      <li><a href="#pc">Committee</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">CAiSE 2027 Workshop · Seville, Spain</div>
+      <h1>Knowledge Graphs for Agentic AI Systems Engineering
+        <span class="acr">1st KG4AgenticAI Workshop</span></h1>
+      <p class="lead">Exploring how Knowledge Graphs provide the semantic and contextual knowledge needed to engineer goal-driven, tool-using and collaborating AI agents for Information Systems.</p>
+      <div class="facts">
+        <span class="chip"><b>8 June 2027</b> · full day</span>
+        <span class="chip">co-located with <b>CAiSE 2027</b></span>
+        <span class="chip">Proceedings: <b>Springer LNBIP</b></span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#submission">Call for papers</a>
+        <a class="btn ghost" href="https://www.caise2027seville.org" target="_blank" rel="noopener">CAiSE 2027 website</a>
+      </div>
+    </div>
+
+    <!-- Header illustration: a knowledge graph traversed by an agent loop -->
+    <svg viewBox="0 0 560 520" role="img" aria-label="Illustration of an AI agent loop navigating a knowledge graph">
+      <g>
+        <line class="edge" x1="90" y1="110" x2="210" y2="70"/>
+        <line class="edge" x1="90" y1="110" x2="130" y2="240"/>
+        <line class="edge" x1="210" y1="70" x2="330" y2="120"/>
+        <line class="edge" x1="330" y1="120" x2="470" y2="90"/>
+        <line class="edge" x1="470" y1="90" x2="500" y2="220"/>
+        <line class="edge" x1="130" y1="240" x2="90" y2="380"/>
+        <line class="edge" x1="90" y1="380" x2="200" y2="460"/>
+        <line class="edge" x1="200" y1="460" x2="340" y2="470"/>
+        <line class="edge" x1="340" y1="470" x2="490" y2="410"/>
+        <line class="edge" x1="490" y1="410" x2="500" y2="220"/>
+        <line class="edge" x1="210" y1="70" x2="130" y2="240"/>
+        <!-- edges touched by the agent -->
+        <line class="edge hot" x1="130" y1="240" x2="430" y2="300"/>
+        <line class="edge hot" x1="330" y1="120" x2="430" y2="300"/>
+        <line class="edge hot" x1="500" y1="220" x2="430" y2="300"/>
+        <line class="edge hot" x1="340" y1="470" x2="430" y2="300"/>
+        <line class="edge" x1="330" y1="120" x2="130" y2="240"/>
+        <line class="edge" x1="200" y1="460" x2="130" y2="240"/>
+      </g>
+      <g>
+        <circle class="node" cx="90" cy="110" r="8"/>
+        <circle class="node ent" cx="210" cy="70" r="10"/>
+        <circle class="node hot" cx="330" cy="120" r="9"/>
+        <circle class="node" cx="470" cy="90" r="8"/>
+        <circle class="node hot" cx="500" cy="220" r="9" style="animation-delay:.6s"/>
+        <circle class="node hot" cx="130" cy="240" r="9" style="animation-delay:1.2s"/>
+        <circle class="node" cx="90" cy="380" r="8"/>
+        <circle class="node ent" cx="200" cy="460" r="10"/>
+        <circle class="node hot" cx="340" cy="470" r="9" style="animation-delay:1.8s"/>
+        <circle class="node" cx="490" cy="410" r="8"/>
+      </g>
+      <text class="lbl" x="222" y="62">:Process</text>
+      <text class="lbl" x="344" y="114">:Tool</text>
+      <text class="lbl" x="482" y="84">:API</text>
+      <text class="lbl" x="512" y="224">:Policy</text>
+      <text class="lbl" x="40" y="236">:Stakeholder</text>
+      <text class="lbl" x="214" y="490">:Data</text>
+      <text class="lbl" x="354" y="496">:Context</text>
+      <text class="lbl" x="44" y="104">:Goal</text>
+
+      <!-- agent loop -->
+      <circle class="agent-ring" cx="430" cy="300" r="62"/>
+      <g class="orbit">
+        <circle cx="492" cy="300" r="5" fill="var(--amber)"/>
+        <circle cx="368" cy="300" r="4" fill="var(--coral)"/>
+      </g>
+      <circle class="agent-core" cx="430" cy="300" r="26"/>
+      <text x="430" y="305" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="15" fill="#0b1426">agent</text>
+      <text class="step" x="430" y="226" text-anchor="middle">plan</text>
+      <text class="step" x="510" y="304">act</text>
+      <text class="step" x="430" y="382" text-anchor="middle">observe</text>
+      <text class="step" x="318" y="304" text-anchor="end">retrieve</text>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">01</span><h2>About the workshop</h2></div>
+    <div class="prose">
+      <p>AI is moving beyond systems that generate content or answer single prompts towards <strong>agentic systems</strong> able to pursue goals, plan multi-step activities, interact with external tools and coordinate with other agents. As these agents become integrated with enterprise applications, business processes and organizational data, their development requires mechanisms to represent, access and integrate the knowledge their decisions and actions depend on.</p>
+      <p>KG4AgenticAI offers a dedicated venue to discuss the <strong>convergence of Knowledge Graphs and Agentic AI</strong> from an Information Systems Engineering perspective.</p>
+    </div>
+    <div class="grid3">
+      <div class="card"><span class="tag t1">Scientific</span><h3>Advance KG × Agentic AI research</h3><p>Stimulate research on how Knowledge Graphs can provide semantic and contextual knowledge for engineering more advanced agentic AI systems.</p></div>
+      <div class="card"><span class="tag t2">Engineering</span><h3>Methods and architectures</h3><p>Explore methods and architectures for developing knowledge-driven intelligent Information Systems built on AI agents.</p></div>
+      <div class="card"><span class="tag t3">Community</span><h3>Bridge two communities</h3><p>Bring together researchers on KGs and LLMs, notably around the EU COST Action KGELL, with the systems engineering community of CAiSE.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">02</span><h2>Positioning</h2></div>
+    <div class="compare">
+      <div class="card"><h3>Within CAiSE</h3><p>CAiSE covers knowledge-driven approaches, AI, KGs and agentic platforms broadly; KG4AgenticAI focuses on their <em>convergence</em> rather than treating them separately.</p></div>
+      <div class="card"><h3>vs. hybrid AI venues</h3><p>Workshops on hybrid AI address symbolic and sub-symbolic integration in general; KG4AgenticAI has a narrower focus on KGs as the knowledge backbone of agents.</p></div>
+      <div class="card"><h3>vs. modeling venues</h3><p>Conceptual models and business processes are welcome when they support the development or operation of agentic information systems.</p></div>
+    </div>
+    <p class="note" style="margin-top:24px">All levels of research maturity are welcome: position and vision papers, experience reports and full research papers.</p>
+  </div>
+</section>
+
+<section id="topics">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">03</span><h2>Topics of interest</h2></div>
+    <ol class="topics">
+      <li>The convergence of Knowledge Graphs, Large Language Models and systems engineering</li>
+      <li>Knowledge Graphs as mediators between data, stakeholders and large language models</li>
+      <li>GraphRAG and Knowledge Graph-based retrieval for agentic applications</li>
+      <li>Knowledge-driven tool selection and use, function calling and external system interaction</li>
+      <li>Engineering and integration of knowledge-driven agentic Information Systems</li>
+      <li>Multi-agent collaboration and coordination supported by shared Knowledge Graphs</li>
+      <li>Context-aware agentic systems supported by Knowledge Graphs</li>
+      <li>Temporal and contextual Knowledge Graphs for adaptive agentic systems</li>
+      <li>Evaluation of Knowledge Graph-based Agentic AI systems</li>
+      <li>Application scenarios for Knowledge Graphs and Agentic AI</li>
+      <li>Empirical studies and experience reports on Knowledge Graph-based information systems</li>
+    </ol>
+  </div>
+</section>
+
+<section id="submission">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">04</span><h2>Submission</h2></div>
+    <div class="prose"><p>We invite two types of contributions. Accepted papers will be published in the CAiSE 2027 Workshops proceedings in the <strong>Springer LNBIP</strong> series.</p></div>
+    <div class="papers">
+      <div class="card"><span class="tag t1">Full papers</span><div class="pages">10–12 <small>pages</small></div><p>Regular research papers or experience papers.</p></div>
+      <div class="card"><span class="tag t2">Short papers</span><div class="pages">6–9 <small>pages</small></div><p>Position papers or vision papers.</p></div>
+    </div>
+    <p class="note">Papers must follow the Springer LNBIP formatting guidelines. Submissions are handled through EasyChair: <strong>submission link to be announced</strong>. At least one author of each accepted paper must register for the workshop and present the paper.</p>
+  </div>
+</section>
+
+<section id="dates">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">05</span><h2>Important dates</h2></div>
+    <table class="dates">
+      <tr><td>Paper submission</td><td class="tba">TBA</td></tr>
+      <tr><td>Notification of acceptance</td><td class="tba">TBA</td></tr>
+      <tr><td>Camera-ready version</td><td class="tba">TBA</td></tr>
+      <tr class="main"><td>Workshop day</td><td>8 June 2027</td></tr>
+      <tr><td>CAiSE 2027 conference</td><td>7–11 June 2027</td></tr>
+    </table>
+    <p style="margin-top:14px;color:var(--muted);font-size:14.5px">All deadlines are 23:59 AoE (Anywhere on Earth).</p>
+  </div>
+</section>
+
+<section id="program">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">06</span><h2>Program</h2></div>
+    <div class="prose"><p>A full-day, presentation-oriented workshop with 3–4 sessions. The detailed program will be published after notification of acceptance.</p></div>
+    <div class="timeline">
+      <div class="slot"><b>Opening &amp; keynote</b><span>Invited talk on KGs and agentic AI (TBA)</span></div>
+      <div class="slot"><b>Paper session I</b><span>Full and short paper presentations</span></div>
+      <div class="slot"><b>Paper session II</b><span>Full and short paper presentations</span></div>
+      <div class="slot"><b>Panel &amp; closing</b><span>Open discussion on research directions</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="organizers">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">07</span><h2>Organizers</h2></div>
+    <div class="people">
+      <div class="person">
+        <img class="avatar" src="img/buscaldi.jpg" alt="Davide Buscaldi" data-initials="DB">
+        <h3>Davide Buscaldi</h3>
+        <div class="role">Workshop co-chair</div>
+        <div class="aff">LIPN, Université Sorbonne Paris Nord, France</div>
+        <p>Associate Professor (Maître de Conférences, HDR) at Université Sorbonne Paris Nord and part-time Associate Professor at École Polytechnique. Science Communication Coordinator and Management Committee member of the EU COST Action KGELL. Co-organizer of the DL4KG workshop series (2019–2024) at ESWC, ISWC and KDD. His research spans NLP, machine learning and knowledge representation, focusing on LLMs, graph neural networks and the automatic construction of scientific knowledge graphs.</p>
+        <div class="links"><a href="https://buscaldi.eu/" target="_blank" rel="noopener">Homepage</a><a href="mailto:davide.buscaldi@lipn.univ-paris13.fr">Email</a></div>
+      </div>
+      <div class="person">
+        <img class="avatar" src="img/ghiran.jpg" alt="Ana-Maria Ghiran" data-initials="AG">
+        <h3>Ana-Maria Ghiran</h3>
+        <div class="role">Workshop co-chair</div>
+        <div class="aff">Business Information Systems Dept., Babeș-Bolyai University, Romania</div>
+        <p>Lecturer at Babeș-Bolyai University and leader of Working Group 3 (Knowledge Graph Construction assisted by LLMs) in the EU COST Action KGELL. PC member for conferences such as BIR, ISD, PoEM and RCIS. Editor of the Springer LNCS proceedings of KSEM 2023, of the CEUR-WS proceedings of the 1st OMILAB-KNOW Workshop, and of issues 39 and 42 of the CSIMQ journal.</p>
+        <div class="links"><a href="mailto:anamaria.ghiran@econ.ubbcluj.ro">Email</a></div>
+      </div>
+      <div class="person">
+        <img class="avatar" src="img/chis.jpg" alt="Andrei Chiș" data-initials="AC">
+        <h3>Andrei Chiș</h3>
+        <div class="role">Web presence chair</div>
+        <div class="aff">Business Information Systems Dept., Babeș-Bolyai University, Romania</div>
+        <p>PhD student and researcher in the Department of Business Information Systems. His research lies at the intersection of Conceptual Modeling, Semantic Web technologies and Generative AI, with a particular focus on applying Knowledge Graphs in organizational settings.</p>
+        <div class="links"><a href="mailto:andrei.chis@econ.ubbcluj.ro">Email</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pc">
+  <div class="wrap">
+    <div class="sec-head"><span class="num">08</span><h2>Program Committee</h2></div>
+    <ul class="pc">
+      <li>Maryam Abbasi<span>Universidade de Coimbra, Portugal</span></li>
+      <li>Robert Buchmann<span>Babeș-Bolyai University, Romania</span></li>
+      <li>Remzi Celebi<span>Maastricht University, Netherlands</span></li>
+      <li>Andrei Chiș<span>Babeș-Bolyai University, Romania</span></li>
+      <li>Ahmet Cevahir Çınar<span>Selçuk University, Türkiye</span></li>
+      <li>Klesti Hoxha<span>University of Tirana, Albania</span></li>
+      <li>Livio Robaldo<span>Swansea University, United Kingdom</span></li>
+      <li>María del Mar Roldán<span>Universidad de Málaga, Spain</span></li>
+      <li>Marco Antonio Stranisci<span>IT University of Copenhagen, Denmark</span></li>
+      <li>Berat Ujkani<span>University “Isa Boletini” Mitrovica, Kosovo</span></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong style="color:#fff">KG4AgenticAI 2027</strong> · 1st Workshop on Knowledge Graphs for Agentic AI Systems Engineering<br>
+      Co-located with <a href="https://www.caise2027seville.org" target="_blank" rel="noopener">CAiSE 2027</a>, Seville, Spain · 8 June 2027
+    </div>
+    <div>
+      Contact: <a href="mailto:davide.buscaldi@lipn.univ-paris13.fr">D. Buscaldi</a> ·
+      <a href="mailto:anamaria.ghiran@econ.ubbcluj.ro">A.-M. Ghiran</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fall back to an initials badge when an organizer photo is missing
+  document.querySelectorAll('img.avatar').forEach(function (img) {
+    function fallback() {
+      var d = document.createElement('div');
+      d.className = 'avatar';
+      d.textContent = img.dataset.initials;
+      d.setAttribute('aria-label', img.alt);
+      img.replaceWith(d);
+    }
+    if (img.complete && img.naturalWidth === 0) fallback();
+    else img.addEventListener('error', fallback);
+  });
+</script>
+</body>
+</html>
